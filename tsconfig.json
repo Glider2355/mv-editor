@@ -13,8 +13,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node"]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "out", "dist", "build", ".remotion"]
 }

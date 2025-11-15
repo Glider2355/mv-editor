@@ -92,3 +92,32 @@ export interface ColorScheme {
   background: string;
   text: string;
 }
+
+// シーンタイプ
+export type SceneType = 'artist' | 'lyrics' | 'visualEffect' | 'none';
+
+// プリセット設定可能なシーン
+export interface PresetSceneConfig {
+  type: SceneType;
+  from: number;
+  durationInFrames: number;
+  // Artist Scene設定
+  artistName?: string;
+  songTitle?: string;
+  layout?: LayoutType;
+  theme?: ThemeType;
+  primaryColor?: string;
+  secondaryColor?: string;
+  // Lyrics Scene設定
+  lyrics?: string;
+  fontSize?: number;
+  fontFamily?: string;
+  textColor?: string;
+  backgroundColor?: string;
+  animationType?: AnimationType;
+  position?: LayoutType;
+  // Visual Effect Scene設定
+  effectType?: EffectType;
+  colorScheme?: string[];
+  intensity?: number;
+}

@@ -7,7 +7,7 @@ import { VisualEffectScene } from '../scenes/VisualEffectScene';
 interface SimpleMVProps {
   artistName: string;
   songTitle: string;
-  audioFile: string;
+  audioFile?: string;
 }
 
 export const SimpleMV: React.FC<SimpleMVProps> = ({
@@ -15,12 +15,11 @@ export const SimpleMV: React.FC<SimpleMVProps> = ({
   songTitle,
   audioFile,
 }) => {
-  const fps = 30;
 
   return (
     <AbsoluteFill style={{ backgroundColor: '#000000' }}>
-      {/* オーディオトラック */}
-      <Audio src={staticFile(audioFile)} />
+      {/* オーディオトラック（ファイルがある場合のみ） */}
+      {audioFile && <Audio src={staticFile(audioFile)} />}
 
       {/* シーン1: アーティスト・曲名表示 (0-4秒) */}
       <Sequence from={0} durationInFrames={120}>

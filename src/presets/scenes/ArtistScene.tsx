@@ -3,13 +3,13 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate } from 'remo
 import type { ArtistSceneProps } from '../../types';
 
 export const ArtistScene: React.FC<ArtistSceneProps> = ({
-  artistName,
-  songTitle,
-  layout,
-  theme,
-  primaryColor,
-  secondaryColor,
-  durationInFrames,
+  artistName = 'Artist Name',
+  songTitle = 'Song Title',
+  layout = 'center',
+  theme = 'minimal',
+  primaryColor = '#667eea',
+  secondaryColor = '#764ba2',
+  durationInFrames = 120,
 }) => {
   const frame = useCurrentFrame();
   const { fps, width, height } = useVideoConfig();
@@ -141,12 +141,3 @@ export const ArtistScene: React.FC<ArtistSceneProps> = ({
   );
 };
 
-ArtistScene.defaultProps = {
-  artistName: 'Artist Name',
-  songTitle: 'Song Title',
-  layout: 'center',
-  theme: 'minimal',
-  primaryColor: '#667eea',
-  secondaryColor: '#764ba2',
-  durationInFrames: 120,
-};

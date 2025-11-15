@@ -3,14 +3,14 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate } from 'remo
 import type { LyricsSceneProps } from '../../types';
 
 export const LyricsScene: React.FC<LyricsSceneProps> = ({
-  lyrics,
-  fontSize,
-  fontFamily,
-  color,
-  backgroundColor,
-  animationType,
-  position,
-  durationInFrames,
+  lyrics = 'Sample Lyrics',
+  fontSize = 48,
+  fontFamily = 'Arial, sans-serif',
+  color = '#FFFFFF',
+  backgroundColor = '#1a1a1a',
+  animationType = 'fade',
+  position = 'center',
+  durationInFrames = 90,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -31,7 +31,7 @@ export const LyricsScene: React.FC<LyricsSceneProps> = ({
   let textOpacity = opacity;
 
   switch (animationType) {
-    case 'slide':
+    case 'slide': {
       const slideX = interpolate(
         frame,
         [0, fadeInDuration],
@@ -40,20 +40,14 @@ export const LyricsScene: React.FC<LyricsSceneProps> = ({
       );
       transform = `translateX(${slideX}px)`;
       break;
+    }
 
-    case 'typewriter':
-      const charsToShow = Math.floor(
-        interpolate(
-          frame,
-          [0, durationInFrames * 0.3],
-          [0, lyrics.length],
-          { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }
-        )
-      );
-      // タイプライター効果は別途実装
+    case 'typewriter': {
+      // タイプライター効果は将来実装予定
       break;
+    }
 
-    case 'bounce':
+    case 'bounce': {
       const bounceY = interpolate(
         frame,
         [0, fadeInDuration / 2, fadeInDuration],
@@ -62,6 +56,7 @@ export const LyricsScene: React.FC<LyricsSceneProps> = ({
       );
       transform = `translateY(${bounceY}px)`;
       break;
+    }
 
     case 'fade':
     default:
@@ -106,14 +101,3 @@ export const LyricsScene: React.FC<LyricsSceneProps> = ({
   );
 };
 
-// Remotion Studioでのデフォルト値
-LyricsScene.defaultProps = {
-  lyrics: 'Sample Lyrics',
-  fontSize: 48,
-  fontFamily: 'Arial, sans-serif',
-  color: '#FFFFFF',
-  backgroundColor: '#1a1a1a',
-  animationType: 'fade',
-  position: 'center',
-  durationInFrames: 90,
-};

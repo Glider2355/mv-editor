@@ -3,10 +3,10 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate } from 'remo
 import type { VisualEffectSceneProps } from '../../types';
 
 export const VisualEffectScene: React.FC<VisualEffectSceneProps> = ({
-  effectType,
-  colorScheme,
-  intensity,
-  durationInFrames,
+  effectType = 'gradient',
+  colorScheme = ['#667eea', '#764ba2', '#f093fb'],
+  intensity = 1,
+  durationInFrames = 120,
 }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
@@ -141,9 +141,3 @@ export const VisualEffectScene: React.FC<VisualEffectSceneProps> = ({
   );
 };
 
-VisualEffectScene.defaultProps = {
-  effectType: 'gradient',
-  colorScheme: ['#667eea', '#764ba2', '#f093fb'],
-  intensity: 1,
-  durationInFrames: 120,
-};

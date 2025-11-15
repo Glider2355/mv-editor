@@ -60,22 +60,32 @@ mv-editor/
 
 ## 使い方
 
-### 1. 音楽ファイルの準備
-
-`public/audio/` ディレクトリに音楽ファイルを配置します。
-
-```bash
-# 例
-cp your-song.mp3 public/audio/sample.mp3
-```
-
-### 2. Remotion Studioの起動
+### 1. Remotion Studioの起動
 
 ```bash
 npm start
 ```
 
-このコマンドでRemotion Studioが起動し、ブラウザで `http://localhost:3000` が開きます。
+このコマンドでRemotion Studioが起動し、ブラウザで `http://localhost:8500` が開きます。
+
+**注意**: 音楽ファイルがなくてもプレビューは可能です。ビジュアルエフェクトやアニメーションを確認できます。
+
+### 2. 音楽ファイルの追加（オプション）
+
+音楽を追加する場合は、以下の手順で行います：
+
+1. `public/audio/` ディレクトリに音楽ファイルを配置
+   ```bash
+   # 例
+   cp your-song.mp3 public/audio/sample.mp3
+   ```
+
+2. Remotion Studioの左パネルで `audioFile` プロパティを編集
+   ```
+   /audio/sample.mp3
+   ```
+
+3. プレビューを再生すると音楽が流れます
 
 ### 3. MV編集
 
@@ -99,6 +109,18 @@ npm run build
 ### 5. 停止方法
 
 Remotion Studioを停止するには、ターミナルで `Ctrl + C` を押します。
+
+## クイックスタート
+
+音楽ファイルがなくてもすぐに試せます：
+
+1. `npm start` を実行
+2. ブラウザで `http://localhost:8500` が開く
+3. 左パネルで以下を編集：
+   - `artistName`: アーティスト名を入力
+   - `songTitle`: 曲名を入力
+4. 再生ボタンを押してアニメーションを確認
+5. 各シーンの色やフォントサイズなどをカスタマイズ可能
 
 ## カスタマイズ
 
