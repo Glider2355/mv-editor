@@ -1,0 +1,72 @@
+{
+  "title": "バラード風デモ",
+  "artist": "サンプルアーティスト",
+  "background": {
+    "imageSrc": "",
+    "blur": 2,
+    "brightness": 90,
+    "contrast": 110,
+    "saturation": 80,
+    "vignette": true
+  },
+  "audioFile": "",
+  "defaultFontSize": 48,
+  "defaultColor": "#FFFFFF",
+  "defaultFontFamily": "Arial, Hiragino Sans, sans-serif",
+  "lyrics": [
+    {
+      "text": "静かな夜に",
+      "startFrame": 0,
+      "durationInFrames": 90,
+      "effect": "simpleFade",
+      "fontSize": 52,
+      "color": "#E0E0E0",
+      "position": "center"
+    },
+    {
+      "text": "君のことを\n思い出す",
+      "startFrame": 90,
+      "durationInFrames": 120,
+      "effect": "fadeUp",
+      "fontSize": 56,
+      "color": "#B8D4E8",
+      "position": "center"
+    },
+    {
+      "text": "あの日の約束",
+      "startFrame": 210,
+      "durationInFrames": 90,
+      "effect": "simpleFade",
+      "fontSize": 50,
+      "color": "#D4A5A5",
+      "position": "bottom"
+    },
+    {
+      "text": "今でも覚えてる",
+      "startFrame": 300,
+      "durationInFrames": 120,
+      "effect": "fadeDown",
+      "fontSize": 54,
+      "color": "#A5C8D4",
+      "position": "center"
+    },
+    {
+      "text": "遠く離れても\n心は繋がってる",
+      "startFrame": 420,
+      "durationInFrames": 150,
+      "effect": "elastic",
+      "fontSize": 58,
+      "color": "#F0E68C",
+      "position": "center"
+    },
+    {
+      "text": "永遠に",
+      "startFrame": 570,
+      "durationInFrames": 120,
+      "effect": "simpleFade",
+      "fontSize": 64,
+      "color": "#FFFFFF",
+      "position": "center"
+    }
+  ]
+}

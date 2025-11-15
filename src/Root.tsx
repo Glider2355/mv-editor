@@ -1,89 +1,99 @@
 import React from 'react';
-import { Composition } from 'remotion';
-import { SimpleMV } from './presets/templates/SimpleMV';
-import { CustomizableMV } from './presets/templates/CustomizableMV';
-import { simpleMVSchema, customizableMVSchema } from './presets/templates/schemas';
+import { Composition, Folder } from 'remotion';
+import { LyricsMV } from './templates/LyricsMV';
+import { LyricsMVFromJSON } from './templates/LyricsMVFromJSON';
+import { lyricsMVSchema } from './templates/schemas';
+import { lyricsMVFromJSONSchema } from './templates/jsonSchemas';
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      {/* シンプルなMVテンプレート（固定シーン構成） */}
-      <Composition
-        id="SimpleMV"
-        component={SimpleMV as React.ComponentType<unknown>}
-        durationInFrames={900}
-        fps={30}
-        width={1920}
-        height={1080}
-        schema={simpleMVSchema}
-        defaultProps={{
-          artistName: 'Your Artist Name',
-          songTitle: 'Your Song Title',
-        }}
-      />
+      <Folder name="Lyrics-MV">
+        {/* JSONファイルから読み込むテンプレート */}
+        <Composition
+          id="LyricsMV-FromJSON"
+          component={LyricsMVFromJSON as React.ComponentType<unknown>}
+          durationInFrames={900}
+          fps={30}
+          width={1920}
+          height={1080}
+          schema={lyricsMVFromJSONSchema}
+          defaultProps={{
+            jsonFile: '/lyrics/sample.json',
+          }}
+        />
 
-      {/* カスタマイズ可能なMVテンプレート（UIからプリセット選択可能） */}
-      <Composition
-        id="CustomizableMV"
-        component={CustomizableMV as React.ComponentType<unknown>}
-        durationInFrames={900}
-        fps={30}
-        width={1920}
-        height={1080}
-        schema={customizableMVSchema}
-        defaultProps={{
-          audioFile: undefined,
-          scene1: {
-            type: 'artist',
-            from: 0,
-            durationInFrames: 120,
-            artistName: 'Your Artist Name',
-            songTitle: 'Your Song Title',
-            layout: 'center',
-            theme: 'bold',
-            primaryColor: '#667eea',
-            secondaryColor: '#764ba2',
-          },
-          scene2: {
-            type: 'visualEffect',
-            from: 120,
-            durationInFrames: 180,
-            effectType: 'gradient',
-            colorScheme: ['#667eea', '#764ba2', '#f093fb'],
-            intensity: 1,
-          },
-          scene3: {
-            type: 'lyrics',
-            from: 300,
-            durationInFrames: 180,
-            lyrics: 'Your lyrics here',
-            fontSize: 56,
-            textColor: '#FFFFFF',
-            backgroundColor: 'transparent',
-            animationType: 'fade',
-            position: 'center',
-          },
-          scene4: {
-            type: 'visualEffect',
-            from: 480,
-            durationInFrames: 180,
-            effectType: 'particles',
-            colorScheme: ['#fa709a', '#fee140', '#30cfd0'],
-            intensity: 1.2,
-          },
-          scene5: {
-            type: 'artist',
-            from: 660,
-            durationInFrames: 240,
-            artistName: 'Your Artist Name',
-            songTitle: 'Your Song Title',
-            layout: 'center',
-            theme: 'elegant',
-            primaryColor: '#2c3e50',
-            secondaryColor: '#3498db',
-          },
-        }}
-      />
+        {/* 直接編集するテンプレート */}
+        <Composition
+          id="LyricsMV-Direct"
+          component={LyricsMV as React.ComponentType<unknown>}
+          durationInFrames={900}
+          fps={30}
+          width={1920}
+          height={1080}
+          schema={lyricsMVSchema}
+          defaultProps={{
+            background: {
+              imageSrc: '', // 空にするとグラデーション背景を表示。画像を使う場合は '/images/background.jpg' などを指定
+              blur: 0,
+              brightness: 100,
+              contrast: 100,
+              saturation: 100,
+              vignette: false,
+            },
+            lyrics: [
+              {
+                text: '最初の歌詞',
+                startFrame: 0,
+                durationInFrames: 90,
+                effect: 'simpleFade',
+                fontSize: 56,
+                color: '#FFFFFF',
+                position: 'center',
+              },
+              {
+                text: '次の歌詞\nフェードアップ',
+                startFrame: 90,
+                durationInFrames: 90,
+                effect: 'fadeUp',
+                fontSize: 52,
+                color: '#FF6B9D',
+                position: 'center',
+              },
+              {
+                text: 'スライドイン',
+                startFrame: 180,
+                durationInFrames: 90,
+                effect: 'slideLeft',
+                fontSize: 48,
+                color: '#4ECDC4',
+                position: 'bottom',
+              },
+              {
+                text: 'バウンスエフェクト',
+                startFrame: 270,
+                durationInFrames: 90,
+                effect: 'bounceIn',
+                fontSize: 60,
+                color: '#FFE66D',
+                position: 'center',
+              },
+              {
+                text: 'エラスティック',
+                startFrame: 360,
+                durationInFrames: 90,
+                effect: 'elastic',
+                fontSize: 54,
+                color: '#A8DADC',
+                position: 'top',
+              },
+            ],
+            defaultFontSize: 48,
+            defaultColor: '#FFFFFF',
+            defaultFontFamily: 'Arial, Hiragino Sans, sans-serif',
+          }}
+        />
+      </Folder>
     </>
   );
 };

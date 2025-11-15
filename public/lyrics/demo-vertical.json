@@ -1,0 +1,65 @@
+{
+  "background": {
+    "imageSrc": "",
+    "blur": 0,
+    "brightness": 100,
+    "contrast": 100,
+    "saturation": 100,
+    "vignette": false
+  },
+  "lyrics": [
+    {
+      "text": "桜の花びら",
+      "startFrame": 0,
+      "durationInFrames": 90,
+      "effect": "simpleFade",
+      "fontSize": 60,
+      "color": "#FFB7C5",
+      "position": "center",
+      "writingMode": "vertical"
+    },
+    {
+      "text": "風に舞い散る",
+      "startFrame": 90,
+      "durationInFrames": 90,
+      "effect": "fadeUp",
+      "fontSize": 56,
+      "color": "#FFC0CB",
+      "position": "top",
+      "writingMode": "vertical"
+    },
+    {
+      "text": "春の訪れを告げる",
+      "startFrame": 180,
+      "durationInFrames": 90,
+      "effect": "slideLeft",
+      "fontSize": 52,
+      "color": "#FFD4E5",
+      "position": "bottom",
+      "writingMode": "vertical"
+    },
+    {
+      "text": "君と歩いた\nあの道",
+      "startFrame": 270,
+      "durationInFrames": 120,
+      "effect": "bounceIn",
+      "fontSize": 58,
+      "color": "#FF8FAB",
+      "position": "center",
+      "writingMode": "vertical"
+    },
+    {
+      "text": "今も心に咲く",
+      "startFrame": 390,
+      "durationInFrames": 90,
+      "effect": "elastic",
+      "fontSize": 54,
+      "color": "#FFB4D1",
+      "position": "center",
+      "writingMode": "vertical"
+    }
+  ],
+  "defaultFontSize": 48,
+  "defaultColor": "#FFFFFF",
+  "defaultFontFamily": "Hiragino Mincho ProN, MS Mincho, serif"
+}

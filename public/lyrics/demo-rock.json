@@ -1,0 +1,90 @@
+{
+  "title": "ロック風デモ",
+  "artist": "激しいバンド",
+  "background": {
+    "imageSrc": "",
+    "blur": 0,
+    "brightness": 80,
+    "contrast": 150,
+    "saturation": 110,
+    "vignette": true
+  },
+  "audioFile": "",
+  "defaultFontSize": 60,
+  "defaultColor": "#FFFFFF",
+  "defaultFontFamily": "Arial Black, Arial, Hiragino Sans, sans-serif",
+  "lyrics": [
+    {
+      "text": "BREAK THE WALL",
+      "startFrame": 0,
+      "durationInFrames": 60,
+      "effect": "bounceIn",
+      "fontSize": 80,
+      "color": "#FF0000",
+      "position": "center"
+    },
+    {
+      "text": "限界なんて\nない",
+      "startFrame": 60,
+      "durationInFrames": 90,
+      "effect": "slideUp",
+      "fontSize": 68,
+      "color": "#FFFFFF",
+      "position": "center"
+    },
+    {
+      "text": "叫べ",
+      "startFrame": 150,
+      "durationInFrames": 60,
+      "effect": "elastic",
+      "fontSize": 90,
+      "color": "#FFD700",
+      "position": "center"
+    },
+    {
+      "text": "自由を求めて",
+      "startFrame": 210,
+      "durationInFrames": 90,
+      "effect": "slideLeft",
+      "fontSize": 64,
+      "color": "#FF4500",
+      "position": "top"
+    },
+    {
+      "text": "走り出せ",
+      "startFrame": 300,
+      "durationInFrames": 90,
+      "effect": "bounceIn",
+      "fontSize": 72,
+      "color": "#DC143C",
+      "position": "center"
+    },
+    {
+      "text": "止まらない\nこの衝動",
+      "startFrame": 390,
+      "durationInFrames": 120,
+      "effect": "spring",
+      "fontSize": 70,
+      "color": "#FF6347",
+      "position": "center"
+    },
+    {
+      "text": "燃え上がれ!",
+      "startFrame": 510,
+      "durationInFrames": 90,
+      "effect": "elastic",
+      "fontSize": 85,
+      "color": "#FF1493",
+      "position": "center"
+    },
+    {
+      "text": "NEVER GIVE UP",
+      "startFrame": 600,
+      "durationInFrames": 120,
+      "effect": "bounceIn",
+      "fontSize": 76,
+      "color": "#FFFFFF",
+      "position": "center"
+    }
+  ]
+}

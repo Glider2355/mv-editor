@@ -1,0 +1,81 @@
+{
+  "title": "ポップソングデモ",
+  "artist": "元気なアーティスト",
+  "background": {
+    "imageSrc": "",
+    "blur": 0,
+    "brightness": 110,
+    "contrast": 120,
+    "saturation": 130,
+    "vignette": false
+  },
+  "audioFile": "",
+  "defaultFontSize": 56,
+  "defaultColor": "#FFFFFF",
+  "defaultFontFamily": "Arial, Hiragino Sans, sans-serif",
+  "lyrics": [
+    {
+      "text": "Let's Go!",
+      "startFrame": 0,
+      "durationInFrames": 60,
+      "effect": "bounceIn",
+      "fontSize": 72,
+      "color": "#FF6B9D",
+      "position": "center"
+    },
+    {
+      "text": "踊りだそう",
+      "startFrame": 60,
+      "durationInFrames": 90,
+      "effect": "slideLeft",
+      "fontSize": 60,
+      "color": "#FFE66D",
+      "position": "center"
+    },
+    {
+      "text": "この瞬間を\n楽しもう",
+      "startFrame": 150,
+      "durationInFrames": 120,
+      "effect": "bounceIn",
+      "fontSize": 64,
+      "color": "#4ECDC4",
+      "position": "center"
+    },
+    {
+      "text": "太陽みたいに",
+      "startFrame": 270,
+      "durationInFrames": 90,
+      "effect": "slideRight",
+      "fontSize": 58,
+      "color": "#FF9A76",
+      "position": "top"
+    },
+    {
+      "text": "輝いて",
+      "startFrame": 360,
+      "durationInFrames": 90,
+      "effect": "elastic",
+      "fontSize": 68,
+      "color": "#FFD93D",
+      "position": "center"
+    },
+    {
+      "text": "最高の一日",
+      "startFrame": 450,
+      "durationInFrames": 120,
+      "effect": "spring",
+      "fontSize": 62,
+      "color": "#6BCB77",
+      "position": "bottom"
+    },
+    {
+      "text": "みんなで\n作ろう!",
+      "startFrame": 570,
+      "durationInFrames": 150,
+      "effect": "bounceIn",
+      "fontSize": 70,
+      "color": "#FF6B9D",
+      "position": "center"
+    }
+  ]
+}

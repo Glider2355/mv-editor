@@ -1,0 +1,63 @@
+{
+  "title": "サンプル曲",
+  "artist": "アーティスト名",
+  "background": {
+    "imageSrc": "",
+    "blur": 0,
+    "brightness": 100,
+    "contrast": 100,
+    "saturation": 100,
+    "vignette": false
+  },
+  "audioFile": "",
+  "defaultFontSize": 52,
+  "defaultColor": "#FFFFFF",
+  "defaultFontFamily": "Arial, Hiragino Sans, sans-serif",
+  "lyrics": [
+    {
+      "text": "イントロ",
+      "startFrame": 0,
+      "durationInFrames": 60,
+      "effect": "simpleFade",
+      "fontSize": 48,
+      "color": "#FFFFFF",
+      "position": "center"
+    },
+    {
+      "text": "1番の歌詞\n下から浮き上がる",
+      "startFrame": 60,
+      "durationInFrames": 120,
+      "effect": "fadeUp",
+      "fontSize": 56,
+      "color": "#FF6B9D",
+      "position": "center"
+    },
+    {
+      "text": "サビ部分\nバウンスで登場",
+      "startFrame": 180,
+      "durationInFrames": 120,
+      "effect": "bounceIn",
+      "fontSize": 64,
+      "color": "#FFE66D",
+      "position": "center"
+    },
+    {
+      "text": "2番の歌詞\nスライドイン",
+      "startFrame": 300,
+      "durationInFrames": 120,
+      "effect": "slideLeft",
+      "fontSize": 52,
+      "color": "#4ECDC4",
+      "position": "bottom"
+    },
+    {
+      "text": "エンディング\nエラスティック",
+      "startFrame": 420,
+      "durationInFrames": 120,
+      "effect": "elastic",
+      "fontSize": 58,
+      "color": "#A8DADC",
+      "position": "top"
+    }
+  ]
+}

@@ -1,287 +1,306 @@
-# MV Editor - 設計ドキュメント
+# MV Editor - 設計ドキュメント v2
 
 ## プロジェクト概要
 
-Remotionを使用したMV（ミュージックビデオ）作成システム。プリセットをコードで用意し、Remotionの編集画面でユーザーがMVを編集できるようにする。
+Remotionを使用した**一枚絵+歌詞MV**作成システム。背景に一枚の画像を配置し、歌に合わせて様々なエフェクト付きの歌詞を表示する。
+
+## コンセプト
+
+### ターゲット
+- ボカロP、歌い手、アーティストなど、手軽にMVを作りたい人
+- 動画編集スキルがなくても、プリセットから選ぶだけで高品質なMVを作成可能
+
+### MV構成
+1. **背景**: 一枚絵（イラスト、写真など）
+2. **歌詞**: 曲に合わせてタイミングよく表示
+3. **エフェクト**: 歌詞に多彩な視覚効果を適用
 
 ## 設計思想
 
-- **コードベースのプリセット**: よく使われるMVパターンをReactコンポーネントとして実装
-- **Remotion Studio**: ビジュアルエディターでパラメータ調整やプレビューを行う
-- **再利用性**: プリセットを組み合わせて様々なMVを作成可能
+- **シンプルな構成**: 背景画像 + 歌詞のみに特化
+- **豊富な歌詞エフェクト**: 様々なアニメーションとギミックを用意
+- **Remotion Studio編集**: GUIで歌詞タイミング、エフェクト、色などを調整
+- **プリセットベース**: コードで歌詞エフェクトを実装、UIから選択・カスタマイズ
 
 ## システムアーキテクチャ
 
-### 1. プリセットシステム
+### 1. 歌詞エフェクトシステム
 
-#### 1.1 プリセットの種類
+#### 1.1 基本エフェクト
 
-##### シーンプリセット
-- **歌詞表示シーン**: 歌詞をアニメーション付きで表示
-- **アーティスト表示シーン**: アーティスト名・曲名の表示
-- **ビジュアルエフェクトシーン**: パーティクル、グラデーション、幾何学模様など
-- **イメージスライドシーン**: 画像のフェード・スライド表示
-- **ビデオオーバーレイシーン**: ビデオクリップに効果を適用
+**フェード系**
+- **simpleFade**: シンプルなフェードイン/アウト
+- **fadeUp**: 下から浮き上がりながらフェードイン
+- **fadeDown**: 上から降りてきながらフェードイン
 
-##### トランジション
-- **フェード**: クロスフェード、フェードイン/アウト
-- **スライド**: 左右上下のスライド
-- **ワイプ**: 円形、矩形のワイプ効果
-- **ズーム**: ズームイン/アウト
+**スライド系**
+- **slideLeft**: 左からスライドイン
+- **slideRight**: 右からスライドイン
+- **slideUp**: 下からスライドアップ
+- **slideDown**: 上からスライドダウン
 
-##### エフェクト
-- **テキストエフェクト**: タイプライター、フェード、スライド、バウンス
-- **カラーグレーディング**: フィルター、色調補正
-- **オーディオビジュアライザー**: 波形、スペクトラム、パーティクル連動
+**バウンス系**
+- **bounceIn**: 弾むようにフェードイン
+- **elastic**: 伸縮しながら登場
+- **spring**: バネのような動き
+
+**タイプライター系**
+- **typewriter**: 一文字ずつ表示
+- **glitchType**: グリッチ効果付きタイプライター
+- **randomType**: ランダムな順序で文字が表示
+
+#### 1.2 特殊エフェクト
+
+**グリッチ系**
+- **rgbShift**: RGBずれエフェクト
+- **glitch**: グリッチノイズ
+- **digitalGlitch**: デジタルエラー風
+
+**3D系**
+- **rotate3D**: 3D回転
+- **flip**: 反転アニメーション
+- **perspective**: 遠近感のある動き
+
+**パーティクル系**
+- **particleBurst**: 文字が粒子になって現れる
+- **sparkle**: キラキラエフェクト
+- **dissolve**: 溶けるように消える
+
+**カラオケ系**
+- **karaokeFill**: 歌に合わせて色が変わる
+- **highlight**: 単語ごとにハイライト
+- **waveColor**: 波のように色が変化
+
+#### 1.3 背景エフェクト
+
+**ブラー**
+- **gaussianBlur**: ガウスぼかし
+- **motionBlur**: モーションブラー
+- **radialBlur**: 放射状ブラー
+
+**カラー調整**
+- **brightness**: 明度調整
+- **contrast**: コントラスト調整
+- **saturation**: 彩度調整
+- **hueShift**: 色相シフト
+
+**オーバーレイ**
+- **gradientOverlay**: グラデーションオーバーレイ
+- **vignette**: ビネット効果
+- **grain**: フィルムグレイン
 
 ### 2. プロジェクト構造
 
 ```
 mv-editor/
-├── docs/                       # ドキュメント
+├── docs/
 │   └── design.md              # 設計書
 ├── src/
-│   ├── Root.tsx               # Remotionのルートコンポーネント
-│   ├── Composition.tsx        # メインのコンポジション
-│   ├── presets/               # プリセット集
-│   │   ├── scenes/            # シーンプリセット
-│   │   │   ├── LyricsScene.tsx
-│   │   │   ├── ArtistScene.tsx
-│   │   │   ├── VisualEffectScene.tsx
-│   │   │   ├── ImageSlideScene.tsx
-│   │   │   └── VideoOverlayScene.tsx
-│   │   ├── transitions/       # トランジション
-│   │   │   ├── Fade.tsx
-│   │   │   ├── Slide.tsx
-│   │   │   ├── Wipe.tsx
-│   │   │   └── Zoom.tsx
-│   │   ├── effects/           # エフェクト
-│   │   │   ├── TextEffects.tsx
-│   │   │   ├── ColorGrading.tsx
-│   │   │   └── AudioVisualizer.tsx
-│   │   └── templates/         # MVテンプレート
-│   │       ├── PopMV.tsx
-│   │       ├── RockMV.tsx
-│   │       └── BalladMV.tsx
-│   ├── components/            # 共通コンポーネント
-│   │   ├── Text/
-│   │   ├── Image/
-│   │   └── Video/
-│   ├── utils/                 # ユーティリティ
-│   │   ├── audio.ts          # オーディオ解析
-│   │   ├── timing.ts         # タイミング計算
-│   │   └── animation.ts      # アニメーションヘルパー
-│   └── types/                 # TypeScript型定義
-│       └── index.ts
-├── public/                    # 静的ファイル
-│   ├── audio/                # 音楽ファイル
-│   ├── images/               # 画像素材
-│   └── videos/               # ビデオ素材
-├── remotion.config.ts        # Remotion設定
+│   ├── Root.tsx               # Remotionルート
+│   ├── index.ts               # エントリーポイント
+│   ├── components/
+│   │   ├── Background/        # 背景コンポーネント
+│   │   │   └── ImageBackground.tsx
+│   │   └── LyricsText/        # 歌詞テキストコンポーネント
+│   │       ├── LyricsText.tsx
+│   │       └── effects/       # 歌詞エフェクト
+│   │           ├── FadeEffects.tsx
+│   │           ├── SlideEffects.tsx
+│   │           ├── BounceEffects.tsx
+│   │           ├── TypewriterEffects.tsx
+│   │           ├── GlitchEffects.tsx
+│   │           ├── Transform3DEffects.tsx
+│   │           ├── ParticleEffects.tsx
+│   │           └── KaraokeEffects.tsx
+│   ├── templates/
+│   │   └── LyricsMV.tsx       # メインMVテンプレート
+│   ├── utils/
+│   │   ├── animations.ts      # アニメーション関数
+│   │   └── easing.ts          # イージング関数
+│   └── types/
+│       └── index.ts           # 型定義
+├── public/
+│   ├── audio/                 # 音楽ファイル
+│   └── images/                # 背景画像
+├── remotion.config.ts
 └── package.json
 ```
 
 ### 3. データ構造
 
-#### 3.1 プリセットの型定義
+#### 3.1 型定義
 
 ```typescript
-// シーンの基本インターフェース
-interface SceneProps {
+// 歌詞エフェクトタイプ
+type LyricsEffectType =
+  | 'simpleFade' | 'fadeUp' | 'fadeDown'
+  | 'slideLeft' | 'slideRight' | 'slideUp' | 'slideDown'
+  | 'bounceIn' | 'elastic' | 'spring'
+  | 'typewriter' | 'glitchType' | 'randomType'
+  | 'rgbShift' | 'glitch' | 'digitalGlitch'
+  | 'rotate3D' | 'flip' | 'perspective'
+  | 'particleBurst' | 'sparkle' | 'dissolve'
+  | 'karaokeFill' | 'highlight' | 'waveColor';
+
+// 歌詞行の設定
+interface LyricsLine {
+  text: string;
+  startFrame: number;
   durationInFrames: number;
-  fps: number;
-  startFrom?: number;
+  effect: LyricsEffectType;
+  fontSize?: number;
+  color?: string;
+  position?: 'top' | 'center' | 'bottom';
+  fontFamily?: string;
 }
 
-// 歌詞シーンのプロパティ
-interface LyricsSceneProps extends SceneProps {
-  lyrics: string;
-  fontSize: number;
-  fontFamily: string;
-  color: string;
-  backgroundColor: string;
-  animationType: 'fade' | 'slide' | 'typewriter' | 'bounce';
-  position: 'top' | 'center' | 'bottom';
+// 背景設定
+interface BackgroundConfig {
+  imageSrc: string;
+  blur?: number;
+  brightness?: number;
+  contrast?: number;
+  saturation?: number;
+  vignette?: boolean;
 }
 
-// アーティストシーンのプロパティ
-interface ArtistSceneProps extends SceneProps {
-  artistName: string;
-  songTitle: string;
-  layout: 'center' | 'split' | 'corner';
-  theme: 'minimal' | 'bold' | 'elegant';
-}
-
-// ビジュアルエフェクトのプロパティ
-interface VisualEffectSceneProps extends SceneProps {
-  effectType: 'particles' | 'gradient' | 'geometric' | 'noise';
-  colorScheme: string[];
-  intensity: number;
-}
-
-// MVテンプレート設定
-interface MVTemplate {
-  name: string;
-  description: string;
-  scenes: Array<{
-    type: string;
-    props: SceneProps;
-    transition?: TransitionConfig;
-  }>;
-  audioFile: string;
-  fps: number;
-  width: number;
-  height: number;
+// MVテンプレートProps
+interface LyricsMVProps {
+  audioFile?: string;
+  background: BackgroundConfig;
+  lyrics: LyricsLine[];
+  defaultFontSize: number;
+  defaultColor: string;
+  defaultFontFamily: string;
 }
 ```
 
 ### 4. コンポーネント設計
 
-#### 4.1 プリセットコンポーネントの実装方針
+#### 4.1 ImageBackground
 
-各プリセットは以下の原則に従う:
-
-1. **Props駆動**: すべてのパラメータをPropsで受け取る
-2. **Remotion Studio対応**: `defaultProps`を設定し、エディターで編集可能にする
-3. **フレーム計算**: `useCurrentFrame()`と`useVideoConfig()`を使用
-4. **レスポンシブ**: 解像度に応じて適切にスケーリング
-5. **パフォーマンス**: 重い処理は`useMemo`で最適化
-
-#### 4.2 プリセットの使用例
+背景画像を表示し、エフェクトを適用するコンポーネント
 
 ```typescript
-// LyricsScene.tsx
-export const LyricsScene: React.FC<LyricsSceneProps> = ({
-  lyrics,
-  fontSize,
-  color,
-  animationType,
-  // ...
-}) => {
-  const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
-
-  // アニメーション計算
-  const opacity = interpolate(
-    frame,
-    [0, 30, durationInFrames - 30, durationInFrames],
-    [0, 1, 1, 0]
-  );
-
-  return (
-    <AbsoluteFill style={{ opacity }}>
-      {/* 歌詞の表示 */}
-    </AbsoluteFill>
-  );
-};
-
-LyricsScene.defaultProps = {
-  lyrics: 'Sample lyrics',
-  fontSize: 48,
-  color: '#FFFFFF',
-  animationType: 'fade',
-  // ...
-};
+interface ImageBackgroundProps {
+  imageSrc: string;
+  blur?: number;
+  brightness?: number;
+  contrast?: number;
+  saturation?: number;
+  vignette?: boolean;
+}
 ```
+
+#### 4.2 LyricsText
+
+歌詞テキストを表示し、エフェクトを適用するコンポーネント
+
+```typescript
+interface LyricsTextProps {
+  text: string;
+  effect: LyricsEffectType;
+  fontSize: number;
+  color: string;
+  fontFamily: string;
+  position: 'top' | 'center' | 'bottom';
+  durationInFrames: number;
+}
+```
+
+#### 4.3 LyricsMV
+
+メインMVテンプレート。背景と複数の歌詞を管理
 
 ### 5. ワークフロー
 
 #### 5.1 MV作成の流れ
 
-1. **テンプレート選択**: プリセットのMVテンプレートを選択
-2. **素材の配置**: 音楽ファイル、画像、動画をpublicフォルダに配置
-3. **Remotion Studio起動**: `npm run start`でエディターを開く
-4. **パラメータ調整**: 各シーンのプロパティをGUIで編集
-5. **プレビュー**: リアルタイムでプレビューを確認
-6. **レンダリング**: `npm run build`で動画を出力
+1. **素材準備**
+   - 背景画像を`public/images/`に配置
+   - 音楽ファイルを`public/audio/`に配置
 
-#### 5.2 カスタマイズポイント
+2. **Remotion Studio起動**
+   ```bash
+   npm start
+   ```
 
-Remotion Studioで以下を調整可能:
+3. **MVカスタマイズ**
+   - 背景画像のパスを設定
+   - 音楽ファイルのパスを設定
+   - 歌詞を追加（テキスト、タイミング、エフェクト選択）
+   - 各歌詞行のエフェクト、色、サイズを調整
 
-- **タイミング**: 各シーンの開始時刻と長さ
-- **テキスト**: 歌詞、アーティスト名、曲名
-- **色**: 背景色、テキスト色、グラデーション
-- **エフェクト**: アニメーションタイプ、強度
-- **レイアウト**: 位置、サイズ、配置
+4. **プレビュー**
+   - Remotion Studioでリアルタイムプレビュー
+   - タイムラインで歌詞のタイミングを微調整
 
-### 6. 技術スタック
+5. **レンダリング**
+   ```bash
+   npm run build
+   ```
 
-#### 6.1 コア技術
-
-- **Remotion**: ビデオ作成フレームワーク
-- **React**: UIコンポーネント
-- **TypeScript**: 型安全な開発
-- **CSS-in-JS**: スタイリング（Remotion推奨）
-
-#### 6.2 追加ライブラリ（候補）
-
-- **@remotion/media-utils**: オーディオ解析
-- **@remotion/shapes**: 図形描画
-- **@remotion/transitions**: トランジション
-- **@remotion/paths**: SVGパスアニメーション
-- **framer-motion**: 高度なアニメーション（Remotion互換）
-
-### 7. 実装の優先順位
-
-#### Phase 1: 基本セットアップ
-- [ ] Remotionプロジェクトの初期化
-- [ ] 基本的なプロジェクト構造の作成
-- [ ] TypeScript型定義の作成
-
-#### Phase 2: コアプリセット実装
-- [ ] 歌詞表示シーン
-- [ ] アーティスト表示シーン
-- [ ] 基本的なトランジション（フェード、スライド）
-- [ ] シンプルなMVテンプレート
-
-#### Phase 3: エフェクト拡張
-- [ ] テキストエフェクトの追加
-- [ ] ビジュアルエフェクト（パーティクル、グラデーション）
-- [ ] オーディオビジュアライザー
-
-#### Phase 4: テンプレート拡充
-- [ ] 複数のMVテンプレート作成（Pop, Rock, Ballad等）
-- [ ] テンプレートのドキュメント作成
-- [ ] サンプルMVの作成
-
-### 8. 設定ファイル
-
-#### 8.1 remotion.config.ts
+#### 5.2 歌詞設定例
 
 ```typescript
-import { Config } from '@remotion/cli/config';
-
-Config.setVideoImageFormat('jpeg');
-Config.setOverwriteOutput(true);
-Config.setConcurrency(8);
-Config.setPort(3000);
+lyrics: [
+  {
+    text: "最初のフレーズ",
+    startFrame: 0,
+    durationInFrames: 60,
+    effect: "simpleFade",
+    fontSize: 48,
+    color: "#FFFFFF",
+    position: "center"
+  },
+  {
+    text: "次のフレーズ",
+    startFrame: 60,
+    durationInFrames: 90,
+    effect: "slideUp",
+    fontSize: 52,
+    color: "#FF6B9D",
+    position: "bottom"
+  },
+  // ...
+]
 ```
 
-#### 8.2 推奨プロジェクト設定
+### 6. 実装の優先順位
 
-- **FPS**: 30 or 60（滑らかさと処理速度のバランス）
-- **解像度**: 1920x1080 (Full HD) or 3840x2160 (4K)
-- **コーデック**: h264（互換性）or h265（高品質）
+#### Phase 1: 基本実装
+- [ ] 背景画像コンポーネント（ImageBackground）
+- [ ] 基本的な歌詞表示コンポーネント（LyricsText）
+- [ ] フェード系エフェクト（simpleFade, fadeUp, fadeDown）
+- [ ] スライド系エフェクト（slideLeft, slideRight, slideUp, slideDown）
+- [ ] メインMVテンプレート（LyricsMV）
 
-### 9. ベストプラクティス
+#### Phase 2: エフェクト拡充
+- [ ] バウンス系エフェクト（bounceIn, elastic, spring）
+- [ ] タイプライター系エフェクト（typewriter, glitchType）
+- [ ] 背景エフェクト（blur, brightness, contrast）
 
-1. **パフォーマンス**: 重い計算は`useMemo`でメモ化
-2. **再利用性**: 小さなコンポーネントに分割
-3. **型安全**: すべてのPropsに型を定義
-4. **ドキュメント**: 各プリセットの使い方を明記
-5. **テスト**: サンプルデータでの動作確認
+#### Phase 3: 高度なエフェクト
+- [ ] グリッチ系エフェクト（rgbShift, glitch）
+- [ ] 3D系エフェクト（rotate3D, flip）
+- [ ] パーティクル系エフェクト（particleBurst, sparkle）
+- [ ] カラオケ系エフェクト（karaokeFill, highlight）
 
-### 10. 拡張可能性
+#### Phase 4: UX改善
+- [ ] 歌詞エディターUI
+- [ ] プリセットテンプレート追加
+- [ ] エフェクトプレビュー機能
 
-将来的な拡張案:
+### 7. 技術スタック
 
-- **プラグインシステム**: カスタムプリセットの追加
-- **AI統合**: 歌詞やビートに合わせた自動シーン生成
-- **クラウド連携**: オンラインでの編集・レンダリング
-- **テンプレートマーケット**: コミュニティ作成のプリセット共有
+- **Remotion**: ビデオ作成フレームワーク
+- **React 19**: UIコンポーネント
+- **TypeScript**: 型安全な開発
+- **Zod**: スキーマバリデーション
+- **ESLint + Husky**: コード品質管理
 
-## 参考リンク
+### 8. 参考リンク
 
 - [Remotion Documentation](https://www.remotion.dev/docs/)
-- [Remotion Templates](https://www.remotion.dev/templates)
+- [Remotion Animations](https://www.remotion.dev/docs/animating)
+- [Interpolation Guide](https://www.remotion.dev/docs/interpolate)
